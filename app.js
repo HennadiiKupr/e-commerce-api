@@ -8,6 +8,7 @@ const app = express();
 // rest of the packages
 const morgan = require('morgan');
 const cookieParser = require('cookie-parser');
+const cors = require('cors');
 
 // database
 const connectDB = require('./db/connect');
@@ -22,6 +23,8 @@ const authRouter = require('./routes/authRoutes')
 app.use(morgan('tiny'));
 app.use(express.json());
 app.use(cookieParser(process.env.JWT_SECRET));
+app.use(express.static('./public'));
+app.use(cors());
 
 app.get('/', (req, res) => {
   res.send('E-Commerce API')
