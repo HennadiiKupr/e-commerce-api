@@ -80,8 +80,16 @@ const deleteReview = async (req, res) => {
 
   checkPermissions(req.user, review.user);
 
-  await review.remove();
+  await review.deleteOne();
   res.status(StatusCodes.OK).json({ msg: 'Review deleted successfully' });
+}
+
+const getSingleProductReviews = async (req, res) => {
+  const { id: productId } = req.params;
+
+  const reviews = await Review.find({ product: productId });
+
+  res.status(StatusCodes.OK).json({ reviews, count: reviews.length })
 }
 
 module.exports = {
@@ -89,6 +97,7 @@ module.exports = {
   getAllReviews,
   getSingleReview,
   updateReview,
-  deleteReview
+  deleteReview,
+  getSingleProductReviews
 }
 
